@@ -4,7 +4,7 @@ import { Avatar } from "@mui/material";
 
 const Header = () => {
   return (
-    <div className="grid grid-flow-col px-4 py-2 shadow-lg">
+    <div className="grid grid-flow-col px-4 py-2 shadow-md">
       <div className="col-span-1 flex items-center">
         <Menu size={24} className="text-gray-700 cursor-pointer" />
         <img
