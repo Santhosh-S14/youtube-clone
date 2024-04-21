@@ -18,7 +18,7 @@ import {
 
 const Sidebar = () => {
   return (
-    <div className="w-48">
+    <div className="w-48 shadow-md h-screen">
       <ul className="pb-2 px-2">
         <li className="cursor-pointer rounded-xl hover:bg-gray-200">
           <div className="flex space-x-4 p-2">
