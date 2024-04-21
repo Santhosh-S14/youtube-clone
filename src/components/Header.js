@@ -1,12 +1,22 @@
 import React from "react";
 import { Bell, Menu, Mic, Video } from "lucide-react";
 import { Avatar } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { toggleSidebar } from "../utils/appSlice";
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const handleToggle = () => {
+    dispatch(toggleSidebar());
+  };
   return (
     <div className="grid grid-flow-col px-4 py-2 shadow-md">
       <div className="col-span-1 flex items-center">
-        <Menu size={24} className="text-gray-700 cursor-pointer" />
+        <Menu
+          size={24}
+          className="text-gray-700 cursor-pointer"
+          onClick={handleToggle}
+        />
         <img
           className="w-30 mx-2 h-6"
           src="https://www.gstatic.com/youtube/img/branding/youtubelogo/svg/youtubelogo.svg"
