@@ -1,8 +1,7 @@
 # YouTube clone
 
 ## Overview
-This project is a frontend clone of YouTube, designed to replicate the core functionalities of the popular video-sharing platform. It's built as a learning project to understand React, Redux, and TailwindCSS integration, focusing on responsive design and real-time data fetching from the YouTube Data API.
-Built with JavaScript, React, Redux, and Tailwind. 
+This project is a frontend clone of YouTube, designed to replicate the frontend core functionalities of the popular video-sharing platform. It's built as a learning project to understand React, Redux, and TailwindCSS integration, focusing on responsive design and real-time data fetching from the YouTube Data API.
 
 ## Features
 - YouTube home page: Displays the most popular videos fetched live from the YouTube Data API.
