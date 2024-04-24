@@ -1,11 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Bell, Menu, Mic, Video } from "lucide-react";
 import { Avatar } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { toggleSidebar } from "../utils/appSlice";
+import { YOUTUBE_SEARCH_API } from "../utils/constants";
 
 const Header = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchSuggestions, setSearchSuggestions] = useState([]);
   const dispatch = useDispatch();
+  const getSuggestions = async () => {
+    const url = YOUTUBE_SEARCH_API + searchQuery;
+    const data = await fetch(url);
+    const json = await data.json();
+    setSearchSuggestions(json[1]);
+  };
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      getSuggestions();
+    }, 200);
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [searchQuery]);
   const handleToggle = () => {
     dispatch(toggleSidebar());
   };
@@ -29,6 +46,7 @@ const Header = () => {
             type="text"
             placeholder="Search"
             className="w-1/2 border border-gray-300 rounded-l-full px-4 py-2 focus:outline-none"
+            onChange={(e) => setSearchQuery(e.target.value)}
           ></input>
           <button className="border border-gray-400 rounded-r-full px-5 py-2">
             Search
