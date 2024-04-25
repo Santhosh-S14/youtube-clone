@@ -6,7 +6,9 @@ This project is a frontend clone of YouTube, designed to replicate the frontend 
 ## Features
 - YouTube home page: Displays the most popular videos fetched live from the YouTube Data API.
 - Header: Includes a responsive navigation bar with search functionality.
-- Side nvagiation bar: A collapsible menu for navigating various categories.
+- Side navgiation bar: A collapsible menu for navigating various categories.
+- Watch page: Routes to a watch page on click of any suggested video from the home page.
+- Search: (Currrently implementing with Debouncing and caching techniques for better and faster search results...)
 
 ## Frontend and UI
 Just a React + JavaScript, Tailwind, Lucide application bootstrapped by `create-react-app`
