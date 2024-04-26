@@ -1,24 +1,36 @@
 import React, { useEffect, useState } from "react";
 import { Bell, Menu, Mic, Video, Search } from "lucide-react";
 import { Avatar } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleSidebar } from "../utils/appSlice";
 import { YOUTUBE_SEARCH_API } from "../utils/constants";
+import { insertDataToCache } from "../utils/searchSlice";
 
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchSuggestions, setSearchSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const dispatch = useDispatch();
+  const searchCache = useSelector((store) => store.search);
   const getSuggestions = async () => {
+    console.log("API call" + searchQuery);
     const url = YOUTUBE_SEARCH_API + searchQuery;
     const data = await fetch(url);
     const json = await data.json();
     setSearchSuggestions(json[1]);
+    dispatch(
+      insertDataToCache({
+        [searchQuery]: json[1],
+      })
+    );
   };
   useEffect(() => {
     const timeout = setTimeout(() => {
-      getSuggestions();
+      if (searchCache[searchQuery]) {
+        setSearchSuggestions(searchCache[searchQuery]);
+      } else {
+        getSuggestions();
+      }
     }, 200);
     return () => {
       clearTimeout(timeout);
