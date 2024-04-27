@@ -13,7 +13,6 @@ const Header = () => {
   const dispatch = useDispatch();
   const searchCache = useSelector((store) => store.search);
   const getSuggestions = async () => {
-    console.log("API call" + searchQuery);
     const url = YOUTUBE_SEARCH_API + searchQuery;
     const data = await fetch(url);
     const json = await data.json();
