@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Bell, Menu, Mic, Video, Search } from "lucide-react";
-import { Avatar } from "@mui/material";
+import { Bell, Menu, Mic, Video, Search, UserCircle2 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleSidebar } from "../utils/appSlice";
 import { YOUTUBE_SEARCH_API } from "../utils/constants";
 import { insertDataToCache } from "../utils/searchSlice";
+import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
 
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -12,6 +12,8 @@ const Header = () => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const dispatch = useDispatch();
   const searchCache = useSelector((store) => store.search);
+  const { login, logout } = useKindeAuth();
+  const { user, isAuthenticated, isLoading } = useKindeAuth();
   const getSuggestions = async () => {
     const url = YOUTUBE_SEARCH_API + searchQuery;
     const data = await fetch(url);
@@ -70,7 +72,7 @@ const Header = () => {
           </button>
         </div>
         {showSuggestions && (
-          <div className="fixed flex px-4 py-2 bg-white w-[35rem] shadow-lg rounded-lg border border-gray-200">
+          <div className="absolute flex px-4 py-2 bg-white w-[35rem] shadow-lg rounded-lg border border-gray-200">
             {
               <ul className="w-[35rem]">
                 {searchSuggestions.map((suggestion) => {
@@ -94,9 +96,26 @@ const Header = () => {
       <div className="col-span-3 flex justify-end items-center space-x-6">
         <Video size={24} className="text-gray-700 cursor-pointer" />
         <Bell size={24} className="text-gray-700 cursor-pointer" />
-        <div className="relative">
-          <Avatar className="cursor-pointer" />
-        </div>
+        {isAuthenticated ? (
+          <div className="relative flex px-2">
+            <div className="pr-2">
+              <img
+                src={user.picture}
+                alt="profilePic"
+                className="rounded-full"
+                width={32}
+                height={32}
+              ></img>
+            </div>
+
+            <button onClick={logout}>Logout</button>
+          </div>
+        ) : (
+          <div className="relative flex px-2">
+            <UserCircle2 className="cursor-pointer pr-2" size={32} />
+            <button onClick={login}>Log In</button>
+          </div>
+        )}
       </div>
     </div>
   );

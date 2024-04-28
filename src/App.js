@@ -6,6 +6,8 @@ import appStore from "./utils/store";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Watch from "./components/Watch";
 import MainContainer from "./components/MainContainer";
+import SearchResultsPage from "./components/SearchResultsPage";
+import { KindeProvider } from "@kinde-oss/kinde-auth-react";
 
 function App() {
   const appRouter = createBrowserRouter([
@@ -21,16 +23,27 @@ function App() {
           path: "/watch",
           element: <Watch />,
         },
+        {
+          path: "/results",
+          element: <SearchResultsPage />,
+        },
       ],
     },
   ]);
   return (
-    <div>
-      <Provider store={appStore}>
-        <Header />
-        <RouterProvider router={appRouter} />
-      </Provider>
-    </div>
+    <KindeProvider
+      clientId={process.env.REACT_APP_VITE_KINDE_CLIENT_ID}
+      domain={process.env.REACT_APP_VITE_KINDE_DOMAIN}
+      redirectUri={process.env.REACT_APP_VITE_KINDE_REDIRECT_URL}
+      logoutUri={process.env.REACT_APP_VITE_KINDE_LOGOUT_URL}
+    >
+      <div>
+        <Provider store={appStore}>
+          <Header />
+          <RouterProvider router={appRouter} />
+        </Provider>
+      </div>
+    </KindeProvider>
   );
 }
 
